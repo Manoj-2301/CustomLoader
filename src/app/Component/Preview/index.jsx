@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';    
+import React from 'react';
 import { Controller } from "react-hook-form";
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -12,10 +12,16 @@ const Preview = ({
     acceptedFileTypes,
     dropText,
     dropActiveText,
-    Style,maxFiles,
-    width, height,type,files,
+    dropHeading,
+    loading,
+    Style, maxFiles,
+    width, height, type, files,
+    icon,
+    iconType,
+    Cancel,
+    reject
 }) => {
-    const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
+    const { getRootProps, getInputProps, isDragAccept } = useDropzone({
         onDrop: onDropFiles,
         maxSize,
         maxFiles,
@@ -27,60 +33,57 @@ const Preview = ({
             control={control}
             name={name}
             render={({ field, fieldState: { error } }) => {
+                console.log(field)
                 return (
                     <div className={`${Style.Container}`}>
                         <div {...getRootProps()} className={`${Style.uploaderbox}`}>
-                            <input {...getInputProps()}type={type}/>
-                            {
-                                isDragActive
-                                    ? <p>{dropActiveText}</p>
-                                    : <p>{dropText}</p>
-                            }
+                            <input {...getInputProps()} type={type} />
+                            {loading ? (
+                                <div className='loading'>
+                                    <span className={`${Style.loader}`}></span>
+                                    <p className={`${Style.upload}`}>Uploading file...</p>
+                                    <p className={`${Style.cancelBtn}`}>
+                                        {Cancel}
+                                    </p>
+                                </div>
+                            ) : isDragAccept ? (
+                                <div className={`${Style.drop}`}>
+                                    <span>{icon}</span>
+                                    <p>{dropActiveText}</p>
+                                </div>
+                            ) : (
+                                <div className={`${Style.drop_title}`}>
+                                    {iconType && (<span>{iconType}</span>)}
+                                    <p className={`${Style.drop_sub}`}>{dropHeading}</p>
+                                    <p className={`${Style.drop_sub_em}`}>{dropText}</p>
+                                </div>
+                            )}
                         </div>
+                        <ul className='image_list'>
+                            {files.map(file => (
+                                <li key={file.path} className='side_by_side'>
+                                    <Image
+                                        src={file.preview}
+                                        alt={file.name}
+                                        onLoad={() => { URL.revokeObjectURL(file.preview) }}
+                                        width={width}
+                                        height={height}
+                                    />
+                                    {/* {file.name} <p> Uploaded successfully <i className="fi fi-ss-check-circle"></i></p> */}
+                                </li>
+                            ))}
+                        </ul>
 
-                        <div>
-                            <h4>Files:</h4>
-                            <ul className={`${Style.accepted_img}`}>
-                                {files.map(file => (
-                                    <li key={file.path}>
-                                        <Image
-                                            src={file.preview}
-                                            alt={file.name}
-                                            width={width}
-                                            height={height}
-                                            onLoad={() => {
-                                                URL.revokeObjectURL(file.preview);
-                                            }}
-                                            className="cas"
-                                        />
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div style={{ color: 'red' }}>
-                            <h4>Rejected Files:</h4>
-                            <ul>
-                                {fileRejections.map(({ file, errors }) => (
-                                    <li key={file.path}>
-                                        <Image
-                                            src={file.preview }
-                                            alt={file.name}
-                                            width={width}
-                                            height={height}
-                                            onLoad={() => {
-                                                URL.revokeObjectURL(file.preview);
-                                            }}
-                                            className="cas"
-                                        />
-                                        <ul>
-                                            {errors.map(e => (
-                                                <li key={e.code}>{e.message}</li>
-                                            ))}
-                                        </ul>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        <ul className={`${Style.reject_file}`} >
+                            {reject.map(({ file, errors }) => (
+                                <li key={file.path} className={`${Style.error_list}`}>
+                                    {file.name}                                   
+                                    <ul className={`${Style.error_message}`}>
+                                        {errors.map(e => <li key={e.code} className='error_msg'>Size is More than 1MB<i className="fi fi-sr-circle-x"></i></li>)}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 );
             }}

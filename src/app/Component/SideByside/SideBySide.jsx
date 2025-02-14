@@ -18,6 +18,8 @@ const SideBySide = ({
     width, height, type, files,
     icon,
     Cancel,
+    wrongIcon,
+    wrong,
     reject
 }) => {
     const { getRootProps, getInputProps, isDragAccept } = useDropzone({
@@ -37,7 +39,7 @@ const SideBySide = ({
                         {/* Uploaded Images */}
                         <ul className={`${Style.accepted_list}`}>
                             {files.map(file => (
-                                <li key={file.path} className='side_by_side' style={{ marginBottom: '10px' }}>
+                                <li key={file.id} className={`'${Style.side_by_side}`} >
                                     <Image
                                         src={file.preview}
                                         alt={file.name}
@@ -46,6 +48,7 @@ const SideBySide = ({
                                         height={height}
                                         className={`${Style.image_accepted}`}
                                     />
+                                    <div className={`${Style.wrong}`} onClick={()=>wrong(file)} style={{cursor:"pointer"}}>{wrongIcon}</div>
                                 </li>
                             ))}
                         </ul>

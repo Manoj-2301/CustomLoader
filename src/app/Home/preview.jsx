@@ -13,9 +13,10 @@ const MyForm = () => {
 
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+    const id = Math.floor(Math.random()* 1000)+1;
     setLoading(true)
     const updatedFiles = acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
+      preview: URL.createObjectURL(file),id:id
     }));
 
     setTimeout(() => {
@@ -24,7 +25,7 @@ const MyForm = () => {
       setReject(rejectedFiles)
 
     }, 1000);
-    console.log(acceptedFiles)
+    // console.log(acceptedFiles)
   }, [])
 
 
@@ -56,6 +57,7 @@ const MyForm = () => {
           reject_file: "reject",
           error_list: 'error_list',
           error_message: 'error_message',
+          image_accepted:"image_accepted"
         }}
       />
 

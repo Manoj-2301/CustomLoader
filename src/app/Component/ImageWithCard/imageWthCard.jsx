@@ -58,7 +58,7 @@ const Preview = ({
             {/* accepted image list */}
             <ul className={`${Style.accepted_list}`}>
               {files.map((file) => (
-                <li key={file.path} className={`${Style.accept_file}`}>
+                <li key={file.id} className={`${Style.accept_file}`}>
                   <div className={`${Style.upload}`}>
                     <Image className={`${Style.image}`}
                       src={file.preview}
@@ -77,7 +77,7 @@ const Preview = ({
                     <p className={`${iconDownload ? `${Style.iconBorder}` : Style.download}`}>
                       {iconDownload ? (<span>{iconDownload}</span>) : (<span>Download</span>)}
                     </p>
-                    <p className={`${iconRemove ? `${Style.iconBorder}` : Style.remove}`} onClick={(file) => onClick(file)}>
+                    <p className={`${iconRemove ? `${Style.iconBorder}` : Style.remove}`} onClick={() => onClick(file)} style={{cursor:"pointer"}}>
                       {iconRemove ? (<span>{iconRemove}</span>) : (<span>Remove</span>)}
                     </p>
                   </div>

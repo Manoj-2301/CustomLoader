@@ -33,7 +33,7 @@ const Preview = ({
             control={control}
             name={name}
             render={({ field, fieldState: { error } }) => {
-                console.log(field)
+                // console.log(field)
                 return (
                     <div className={`${Style.Container}`}>
                         <div {...getRootProps()} className={`${Style.uploaderbox}`}>
@@ -61,13 +61,14 @@ const Preview = ({
                         </div>
                         <ul className='image_list'>
                             {files.map(file => (
-                                <li key={file.path} className='side_by_side'>
+                                <li key={file.id} className='side_by_side'>
                                     <Image
                                         src={file.preview}
                                         alt={file.name}
                                         onLoad={() => { URL.revokeObjectURL(file.preview) }}
                                         width={width}
                                         height={height}
+                                        className={`${Style.image_accepted}`}
                                     />
                                     {/* {file.name} <p> Uploaded successfully <i className="fi fi-ss-check-circle"></i></p> */}
                                 </li>

@@ -12,9 +12,11 @@ const MyForm = () => {
     const [loading, setLoading] = useState(false)
 
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+        const id = Math.floor(Math.random() * 1000) + 1;
         setLoading(true)
         const updatedFiles = acceptedFiles.map(file => Object.assign(file, {
-            preview: URL.createObjectURL(file)
+            preview: URL.createObjectURL(file),
+            id: id
         }));
         setReject(rejectedFiles)
 
@@ -26,7 +28,10 @@ const MyForm = () => {
         // console.log(setFiles)
     }, [])
 
-
+    const Delete = (remove) => {
+        setFiles(files.filter((file) => file.id !== remove.id));
+        console.log(remove)
+    };
 
     const onSubmit = (data) => {
         console.log(data);
@@ -39,6 +44,7 @@ const MyForm = () => {
                 type={'file'}
                 control={control}
                 maxSize={1 * 1024 * 1024}
+                wrong={Delete}
                 // maxFiles={2}
                 // dropActiveText={"Drop here"}
                 // dropText={"Drag and Drop"}
@@ -49,6 +55,7 @@ const MyForm = () => {
                 loading={loading}
                 reject={reject}
                 files={files}
+                wrongIcon={<i className="fi fi-br-cross-small"></i>}
                 Style={{
                     container: "main_box",
                     uploaderbox: "container",
@@ -57,7 +64,9 @@ const MyForm = () => {
                     error_list: 'error_list',
                     error_message: 'error_message',
                     accepted_list: "acccepted_list",
-                    image_accepted: "image_accepted"
+                    image_accepted: "image_accepted",
+                    side_by_side: "side",
+                    wrong: "wrong"
                 }}
             />
 

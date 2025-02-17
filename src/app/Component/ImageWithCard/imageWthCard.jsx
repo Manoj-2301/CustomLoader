@@ -69,7 +69,7 @@ const Preview = ({
                     />
                     <div className={`${Style.uploading_file}`}>
                       {file.name}
-                      {loading ? (<span className={`${Style.loader}`}></span>) : (<p style={{ color: "green" }}>File Size Is {bytesToMB(file.size)} MB</p>)}
+                      {loading[file.id]? (<span className={`${Style.loader}`}></span>) : (<p style={{ color: "green" }}>File Size Is {bytesToMB(file.size)} MB</p>)}
                     </div>
                   </div>
 

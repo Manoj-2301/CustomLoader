@@ -11,23 +11,21 @@ const MyForm = () => {
   const [reject, setReject] = useState([])
   const [loading, setLoading] = useState(false)
 
-
+  let uniqueIdCounter = 0;
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    const id = Math.floor(Math.random()* 1000)+1;
     setLoading(true)
     const updatedFiles = acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file),id:id
+      preview: URL.createObjectURL(file),
+      id: uniqueIdCounter++
     }));
 
     setTimeout(() => {
       setFiles(prevFiles => [...prevFiles, ...updatedFiles]);
       setLoading(false)
       setReject(rejectedFiles)
-
-    }, 1000);
-    // console.log(acceptedFiles)
+    }, 2000);
+    console.log(acceptedFiles)
   }, [])
-
 
 
   const onSubmit = (data) => {
@@ -48,16 +46,18 @@ const MyForm = () => {
         width={200}
         height={200}
         icon={"❤️"}
+        acceptedFileTypes={{ 'image/*': ['.png', '.avif'] }}
         loading={loading}
         reject={reject}
         files={files}
+        // message={"more than 1mb"}
         Style={{
-          uploaderbox: "container",
+          uploaderbox: "containers",
           loader: "loader",
           reject_file: "reject",
           error_list: 'error_list',
           error_message: 'error_message',
-          image_accepted:"image_accepted"
+          image_accepted: "image_accepted"
         }}
       />
 

@@ -15,11 +15,13 @@ const Preview = ({
     dropHeading,
     loading,
     Style, maxFiles,
-    width, height, type, files,
+    width, height, type,
+    files= [],
     icon,
     iconType,
     Cancel,
-    reject
+    reject= [],
+    message="file is not supported"
 }) => {
     const { getRootProps, getInputProps, isDragAccept } = useDropzone({
         onDrop: onDropFiles,
@@ -69,6 +71,7 @@ const Preview = ({
                                         width={width}
                                         height={height}
                                         className={`${Style.image_accepted}`}
+                                        // style={{objectFit:"cover"}}
                                     />
                                     {/* {file.name} <p> Uploaded successfully <i className="fi fi-ss-check-circle"></i></p> */}
                                 </li>
@@ -78,9 +81,9 @@ const Preview = ({
                         <ul className={`${Style.reject_file}`} >
                             {reject.map(({ file, errors }) => (
                                 <li key={file.path} className={`${Style.error_list}`}>
-                                    {file.name}                                   
+                                    {/* {file.name}                                    */}
                                     <ul className={`${Style.error_message}`}>
-                                        {errors.map(e => <li key={e.code} className='error_msg'>Size is More than 1MB<i className="fi fi-sr-circle-x"></i></li>)}
+                                        {errors.map(e => <li key={e.code} className='error_msg'>{message}</li>)}
                                     </ul>
                                 </li>
                             ))}

@@ -1,5 +1,5 @@
 import Preview from './preview'
-import Side from './side'
+import Side from './cardImage'
 import ThirdType from './thirdType'
 import './style.scss'
 
@@ -8,7 +8,7 @@ const MyForm = () => {
 
     <>
       <Preview/>
-      <Side />
+      <Side /> 
       <ThirdType/>
     </>
 

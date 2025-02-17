@@ -12,25 +12,26 @@ const MyForm = () => {
     const [loading, setLoading] = useState(false)
 
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-        const id = Math.floor(Math.random() * 1000) + 1;
+        // const id = Math.floor(Math.random() * 1000) + 1;
         setLoading(true)
         const updatedFiles = acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file),
-            id: id
+            id: Math.floor(Math.random() * 1000) + 1,
         }));
         setReject(rejectedFiles)
 
         setTimeout(() => {
-            setFiles(prevFiles => [...prevFiles, ...updatedFiles]);
+            setFiles(Files => [...Files, ...updatedFiles]);
             setLoading(false)
         }, 1000);
         console.log(acceptedFiles)
+        return;
         // console.log(setFiles)
     }, [])
 
     const Delete = (remove) => {
         setFiles(files.filter((file) => file.id !== remove.id));
-        console.log(remove)
+        console.log(remove,"deleted")
     };
 
     const onSubmit = (data) => {
@@ -44,10 +45,7 @@ const MyForm = () => {
                 type={'file'}
                 control={control}
                 maxSize={1 * 1024 * 1024}
-                wrong={Delete}
-                // maxFiles={2}
-                // dropActiveText={"Drop here"}
-                // dropText={"Drag and Drop"}
+                wrong={Delete}               
                 onDropFiles={onDrop}
                 width={200}
                 height={200}
@@ -58,7 +56,7 @@ const MyForm = () => {
                 wrongIcon={<i className="fi fi-br-cross-small"></i>}
                 Style={{
                     container: "main_box",
-                    uploaderbox: "container",
+                    uploaderbox: "uploaderbox",
                     loader: "loaders",
                     reject_file: "reject",
                     error_list: 'error_list',

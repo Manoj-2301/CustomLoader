@@ -20,13 +20,13 @@ const SideBySide = ({
     Cancel,
     wrongIcon,
     wrong,
-    reject
 }) => {
     const { getRootProps, getInputProps, isDragAccept } = useDropzone({
         onDrop: onDropFiles,
         maxSize,
         maxFiles,
         accept: acceptedFileTypes,
+        noDrag:true
     });
 
     return (
@@ -54,7 +54,7 @@ const SideBySide = ({
                         </ul>
                         {/* Drag and Drop Area */}
                         <div {...getRootProps()} className={`${Style.uploaderbox}`} >
-                            <input {...getInputProps()} type={type} />
+                            <input {...getInputProps()} type={type} />                           
                             {loading ? (
                                 <div className='loading'>
                                     <span className={`${Style.loader}`}></span>
@@ -74,7 +74,6 @@ const SideBySide = ({
                                 </div>
                             )}
                         </div>
-
                     </div>
                 );
             }}

@@ -26,7 +26,7 @@ const SideBySide = ({
         maxSize,
         maxFiles,
         accept: acceptedFileTypes,
-        noDrag:true
+        // noDrag:true
     });
 
     return (

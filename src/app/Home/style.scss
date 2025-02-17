@@ -72,12 +72,12 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    background-color: rgb(233, 217, 217);
+    background-color: rgb(255, 255, 255);
     width: 500px;
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 10px;
-
+    box-shadow:  0 0 10px rgba(0, 0, 0, 0.116);
     .image {
         border-radius: 100%;
         object-fit: cover;
@@ -91,8 +91,8 @@
     height: 15px;
     width: 200px;
     border-radius: 10px;
-    background: #fff;
-    border: 2px solid #fff;
+    background: #ffffff;
+    border: 2px solid #01ccff;
     color: rgb(255, 255, 255);
     overflow: hidden;
 
@@ -226,14 +226,14 @@
 .iconBorder {
     border-radius: 100%;
     padding: 12px 15px;
-    border: 2px solid rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
 
 }
 
 .download,
 .remove {
     padding: 12px 15px;
-    border: 2px solid rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 10px;
 }
 

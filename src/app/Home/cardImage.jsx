@@ -45,6 +45,7 @@ const MyForm = () => {
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
 
+  // download function without api
   const handleClick = (file) => {
     if (!file) return; 
     const url = URL.createObjectURL(file);
@@ -56,6 +57,7 @@ const MyForm = () => {
     console.log(file,"downloaded")
   };
 
+  // delete function
   const handleRemoveFile = (remove) => {
     setFiles(files.filter((file) => file.id !== remove.id));
     URL.revokeObjectURL(remove.preview);
@@ -69,7 +71,7 @@ const MyForm = () => {
       type={'file'}
       control={control}
       // maxSize={10 * 1024 * 1024}
-      maxFiles={5}
+      // maxFiles={5}
       dropActiveText={"Drop here"}
       dropText={"Drag and Drop"}
       onDropFiles={onDrop}

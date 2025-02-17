@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import SideBySide from '../Component/ImageWithCard/imageWthCard'
 import './style.scss'
@@ -13,8 +13,7 @@ const MyForm = () => {
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
 
-    const dropFile = acceptedFiles.map(file => {
-     
+    const dropFile = acceptedFiles.map(file => {     
       return Object.assign(file, {
         preview: URL.createObjectURL(file),
         id: idCounter++
@@ -39,13 +38,27 @@ const MyForm = () => {
       }, 10000);
       console.log(file)
       return;
-    });
-   
+    });   
     // console.log(acceptedFiles)
   }, [])
+  useEffect(() => {    
+    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, [files]);
+
+  const handleClick = (file) => {
+    if (!file) return; 
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = file.name; 
+    link.click();
+    URL.revokeObjectURL(url);
+    console.log(file,"downloaded")
+  };
 
   const handleRemoveFile = (remove) => {
     setFiles(files.filter((file) => file.id !== remove.id));
+    URL.revokeObjectURL(remove.preview);
     console.log(remove, 'deleted')
   };
 
@@ -55,7 +68,7 @@ const MyForm = () => {
       name="file"
       type={'file'}
       control={control}
-      maxSize={1 * 1024 * 1024}
+      // maxSize={10 * 1024 * 1024}
       maxFiles={5}
       dropActiveText={"Drop here"}
       dropText={"Drag and Drop"}
@@ -68,6 +81,7 @@ const MyForm = () => {
       loading={loading}
       reject={reject}
       files={files}
+      download={handleClick}
       iconDownload={<i className="fi fi-br-down-to-line"></i>}
       iconRemove={<i className="fi fi-rs-trash"></i>}
       Style={{

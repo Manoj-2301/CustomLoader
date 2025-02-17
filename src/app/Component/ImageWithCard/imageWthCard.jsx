@@ -20,7 +20,8 @@ const Preview = ({
   iconType,
   reject, iconDownload, iconRemove,
   onClick,
-  rejectedIcon
+  rejectedIcon,
+  download, 
 }) => {
   const { getRootProps, getInputProps, isDragAccept } = useDropzone({
     onDrop: onDropFiles,
@@ -69,15 +70,15 @@ const Preview = ({
                     />
                     <div className={`${Style.uploading_file}`}>
                       {file.name}
-                      {loading[file.id]? (<span className={`${Style.loader}`}></span>) : (<p style={{ color: "green" }}>File Size Is {bytesToMB(file.size)} MB</p>)}
+                      {loading[file.id] ? (<span className={`${Style.loader}`}></span>) : (<p style={{ color: "green" }}>File Size Is {bytesToMB(file.size)} MB</p>)}
                     </div>
                   </div>
 
                   <div className={`${Style.option}`}>
-                    <p className={`${iconDownload ? `${Style.iconBorder}` : Style.download}`}>
+                    <p className={`${iconDownload ? `${Style.iconBorder}` : Style.download}`} onClick={() => download(file)} style={{ cursor: "pointer" }}>
                       {iconDownload ? (<span>{iconDownload}</span>) : (<span>Download</span>)}
                     </p>
-                    <p className={`${iconRemove ? `${Style.iconBorder}` : Style.remove}`} onClick={() => onClick(file)} style={{cursor:"pointer"}}>
+                    <p className={`${iconRemove ? `${Style.iconBorder}` : Style.remove}`} onClick={() => onClick(file)} style={{ cursor: "pointer" }}>
                       {iconRemove ? (<span>{iconRemove}</span>) : (<span>Remove</span>)}
                     </p>
                   </div>
@@ -88,9 +89,9 @@ const Preview = ({
             <ul className={`${Style.reject_file}`} >
               {reject.map(({ file, errors }) => (
                 <li key={file.path} className={`${Style.error_list}`}>
-                  <div className={`${Style.sad}`}>     
-                    <span className={`${Style.rejected_sad}`}>{rejectedIcon} </span>              
-                    {file.name}                  
+                  <div className={`${Style.sad}`}>
+                    <span className={`${Style.rejected_sad}`}>{rejectedIcon} </span>
+                    {file.name}
                   </div>
                   <ul className={`${Style.error_message}`}>
                     {errors.map(e => <li key={e.code} className='error_msg'>Size is More than 1MB</li>)}
